@@ -252,7 +252,7 @@ graph TD
     A --> C[Resume Extractor<br/>Coordinator]
     A --> D[ResumeData<br/>Output Model]
     
-    B --> B1[PDFParser<br/>PyPDF2]
+    B --> B1[PDFParser<br/>PyMuPDF]
     B --> B2[WordParser<br/>python-docx]
     B --> B3[Custom Parser<br/>Extensible]
     
@@ -431,7 +431,7 @@ MIT License - Go wild! Build amazing things!
 
 - **OpenAI** for GPT-4
 - **SpaCy** for making NLP accessible
-- **PyPDF2** and **python-docx** for handling the file formats
+- **PyMuPDF** and **python-docx** for handling the file formats
 - **You** for checking out this project!
 
 ## Support

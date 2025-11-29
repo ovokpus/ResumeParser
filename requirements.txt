@@ -1,5 +1,5 @@
 # Core parsing libraries
-PyPDF2==3.0.1              # PDF text extraction
+pymupdf>=1.23.0            # PDF text extraction (PyMuPDF)
 python-docx==1.1.0         # Word document parsing
 
 # NLP for name extraction

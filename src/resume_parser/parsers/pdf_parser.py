@@ -2,7 +2,7 @@
 
 from pathlib import Path
 from typing import Union
-import PyPDF2
+import fitz  # PyMuPDF
 
 from resume_parser.parsers.base import FileParser
 from resume_parser.exceptions import FileParsingError
@@ -15,7 +15,7 @@ class PDFParser(FileParser):
     """
     Parse PDF resume files to extract text content.
     
-    Uses PyPDF2 for text extraction with robust error handling
+    Uses PyMuPDF (fitz) for text extraction with robust error handling
     for various PDF formats and encodings.
     """
     
@@ -40,29 +40,31 @@ class PDFParser(FileParser):
         logger.info(f"Parsing PDF file: {path}")
         
         try:
-            text_content = []
+            # Open PDF with PyMuPDF
+            pdf_document = fitz.open(path)
             
-            with open(path, 'rb') as file:
-                pdf_reader = PyPDF2.PdfReader(file)
-                
+            try:
                 # Check if PDF is encrypted
-                if pdf_reader.is_encrypted:
+                if pdf_document.is_encrypted:
                     logger.warning(f"PDF is encrypted: {path}")
-                    try:
-                        pdf_reader.decrypt('')  # Try empty password
-                    except Exception as e:
+                    # Try to decrypt with empty password
+                    if not pdf_document.authenticate(''):
                         raise FileParsingError(
-                            f"Cannot decrypt PDF: {path}. Error: {str(e)}"
+                            f"Cannot decrypt PDF: {path}. PDF requires a password."
                         )
                 
-                num_pages = len(pdf_reader.pages)
+                num_pages = pdf_document.page_count
                 logger.debug(f"PDF has {num_pages} pages")
                 
+                text_content = []
+                
                 # Extract text from each page
-                for page_num, page in enumerate(pdf_reader.pages):
+                for page_num in range(num_pages):
                     try:
-                        page_text = page.extract_text()
-                        if page_text:
+                        page = pdf_document[page_num]
+                        page_text = page.get_text()
+                        
+                        if page_text.strip():
                             text_content.append(page_text)
                         else:
                             logger.warning(f"No text extracted from page {page_num + 1}")
@@ -71,9 +73,12 @@ class PDFParser(FileParser):
                             f"Error extracting text from page {page_num + 1}: {str(e)}"
                         )
                         continue
-            
-            # Combine all pages
-            full_text = "\n\n".join(text_content)
+                
+                # Combine all pages
+                full_text = "\n\n".join(text_content)
+            finally:
+                # Always close the document
+                pdf_document.close()
             
             if not full_text.strip():
                 raise FileParsingError(
