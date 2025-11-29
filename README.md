@@ -134,7 +134,7 @@ This framework extracts structured information from resume files. You can:
 - Handle various resume formats (PDF, Word documents)
 
 **Minimum Requirements:**
-- Python 3.8 or higher installed
+- Python 3.11 or higher installed
 - OpenAI API key (for skills extraction)
 - Internet connection (for API calls)
 
@@ -148,38 +148,34 @@ This framework extracts structured information from resume files. You can:
 
 ## Installation
 
-### Step 1: Prerequisites
-
-**Check Python Version:**
-```bash
-python --version
-# Should show Python 3.8 or higher
-```
-
-If Python is not installed, download from [python.org](https://www.python.org/downloads/)
-
-### Step 2: Clone the Repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/ovokpus/ResumeParser.git
 cd ResumeParser
 ```
 
-### Step 3: Install Dependencies
+### Step 2: Install Dependencies
 
 **Option A: Using `uv` (Recommended - Faster)**
+
+`uv` automatically manages Python versions and dependencies. It will use Python 3.11 or higher as required by the project.
+
 ```bash
 # Install uv if not already installed
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install dependencies
+# Install dependencies (uv handles Python version automatically)
 uv sync
 ```
 
 **Option B: Using `pip` (Standard)**
+
+Requires Python 3.11 or higher to be installed separately.
+
 ```bash
 # Create virtual environment
-python -m venv venv
+python3 -m venv venv
 
 # Activate virtual environment
 # On macOS/Linux:
@@ -191,7 +187,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Step 4: Install SpaCy Language Model
+### Step 3: Install SpaCy Language Model
 
 ```bash
 # Using uv:
@@ -201,7 +197,7 @@ uv run python -m spacy download en_core_web_sm
 python -m spacy download en_core_web_sm
 ```
 
-### Step 5: Configure OpenAI API Key
+### Step 4: Configure OpenAI API Key
 
 **Create `.env` file:**
 ```bash
@@ -222,7 +218,7 @@ cp .env.example .env
 
 **Note:** Skills extraction requires a valid OpenAI API key. Without it, name and email extraction will still work, but skills extraction will fail.
 
-### Step 6: Verify Installation
+### Step 5: Verify Installation
 
 ```bash
 # Check OpenAI connectivity
@@ -338,14 +334,14 @@ Total processing time: 2.45 seconds
 
 ### Method 3: Programmatic Usage (Python Code)
 
-**Basic Example:**
+**Example 1: Parse a PDF Resume**
 ```python
 from resume_parser import ResumeParserFramework
 
 # Initialize framework
 framework = ResumeParserFramework()
 
-# Parse a resume
+# Parse a PDF resume
 try:
     resume_data = framework.parse_resume("path/to/resume.pdf")
     
@@ -354,8 +350,10 @@ try:
     print(f"Email: {resume_data.email}")
     print(f"Skills: {', '.join(resume_data.skills)}")
     
-    # Get as dictionary
+    # Get as dictionary (JSON format)
     data_dict = resume_data.to_dict()
+    print(data_dict)
+    # Output: {"name": "John Doe", "email": "john@example.com", "skills": ["Python", "AWS"]}
     
 except FileNotFoundError:
     print("Error: Resume file not found")
@@ -363,7 +361,48 @@ except Exception as e:
     print(f"Error: {e}")
 ```
 
-**Batch Processing:**
+**Example 2: Parse a Word Document Resume**
+```python
+from resume_parser import ResumeParserFramework
+
+# Initialize framework
+framework = ResumeParserFramework()
+
+# Parse a Word (.docx) resume
+try:
+    resume_data = framework.parse_resume("path/to/resume.docx")
+    
+    # Access extracted data
+    print(f"Name: {resume_data.name}")
+    print(f"Email: {resume_data.email}")
+    print(f"Skills: {', '.join(resume_data.skills)}")
+    
+    # Get as dictionary (JSON format)
+    data_dict = resume_data.to_dict()
+    print(data_dict)
+    
+except FileNotFoundError:
+    print("Error: Resume file not found")
+except Exception as e:
+    print(f"Error: {e}")
+```
+
+**Example 3: Parse Both Formats**
+```python
+from resume_parser import ResumeParserFramework
+
+framework = ResumeParserFramework()
+
+# The framework automatically detects file type from extension
+pdf_data = framework.parse_resume("resume.pdf")      # Uses PDFParser
+docx_data = framework.parse_resume("resume.docx")    # Uses WordParser
+
+# Both return the same ResumeData structure
+print(f"PDF Resume - Name: {pdf_data.name}")
+print(f"Word Resume - Name: {docx_data.name}")
+```
+
+**Batch Processing (PDF and Word):**
 ```python
 from pathlib import Path
 from resume_parser import ResumeParserFramework
@@ -372,19 +411,22 @@ framework = ResumeParserFramework()
 resume_folder = Path("resumes/")
 
 results = []
-for resume_file in resume_folder.glob("*.pdf"):
-    try:
-        data = framework.parse_resume(resume_file)
-        results.append({
-            "filename": resume_file.name,
-            "name": data.name,
-            "email": data.email,
-            "skills": data.skills,
-            "skill_count": len(data.skills)
-        })
-        print(f"[OK] {resume_file.name}")
-    except Exception as e:
-        print(f"[FAIL] {resume_file.name}: {e}")
+# Process both PDF and Word documents
+for resume_file in resume_folder.glob("*.*"):
+    if resume_file.suffix.lower() in [".pdf", ".docx"]:
+        try:
+            data = framework.parse_resume(resume_file)
+            results.append({
+                "filename": resume_file.name,
+                "format": resume_file.suffix,
+                "name": data.name,
+                "email": data.email,
+                "skills": data.skills,
+                "skill_count": len(data.skills)
+            })
+            print(f"[OK] {resume_file.name} ({resume_file.suffix})")
+        except Exception as e:
+            print(f"[FAIL] {resume_file.name}: {e}")
 
 # Save results
 import json
@@ -525,18 +567,22 @@ date,timestamp,filename,status,json_output,reasons_explanations,name_extracted,e
 
 ### Common Issues and Solutions
 
-#### Issue 1: Python Not Found
+#### Issue 1: Python Not Found (pip users only)
 
-**Error:** `python: command not found`
+**Error:** `python: command not found` or `python3: command not found`
 
-**Solution:**
+**Note:** If using `uv`, Python version is managed automatically - skip this section.
+
+**Solution for pip users:**
 ```bash
-# Try python3 instead
+# Check Python version
 python3 --version
+# Should show Python 3.11 or higher
 
-# Or check if Python is in PATH
-which python
-which python3
+# If Python is not installed, download from python.org
+# Or use uv instead (recommended):
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv sync
 ```
 
 #### Issue 2: SpaCy Model Not Found

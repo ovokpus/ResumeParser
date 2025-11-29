@@ -1,6 +1,6 @@
 """Coordinator for orchestrating field extraction."""
 
-from typing import Dict, Type
+from typing import Dict, Optional
 from resume_parser.models import ResumeData
 from resume_parser.extractors.base import FieldExtractor
 from resume_parser.extractors.name_extractor import NameExtractor
@@ -20,27 +20,39 @@ class ResumeExtractor:
     name, email, and skills, then combines results into ResumeData.
     
     Uses Strategy pattern: different extractors for different fields.
+    
+    Takes a dictionary of field extractors as specified in the requirements.
     """
     
     def __init__(
         self,
-        name_extractor: FieldExtractor = None,
-        email_extractor: FieldExtractor = None,
-        skills_extractor: FieldExtractor = None
+        extractors: Optional[Dict[str, FieldExtractor]] = None
     ):
         """
-        Initialize with field extractors (dependency injection).
+        Initialize with a dictionary of field extractors.
         
         Args:
-            name_extractor: Extractor for name field (default: NameExtractor)
-            email_extractor: Extractor for email field (default: EmailExtractor)
-            skills_extractor: Extractor for skills field (default: SkillsExtractor)
-        """
-        self.name_extractor = name_extractor or NameExtractor()
-        self.email_extractor = email_extractor or EmailExtractor()
-        self.skills_extractor = skills_extractor or SkillsExtractor()
+            extractors: Dictionary mapping field names to FieldExtractor instances.
+                       Expected keys: "name", "email", "skills".
+                       If None or missing keys, default extractors are used.
         
-        logger.info("Initialized ResumeExtractor with all field extractors")
+        Example:
+            >>> extractors = {
+            ...     "name": NameExtractor(),
+            ...     "email": EmailExtractor(),
+            ...     "skills": SkillsExtractor()
+            ... }
+            >>> resume_extractor = ResumeExtractor(extractors)
+        """
+        if extractors is None:
+            extractors = {}
+        
+        # Use provided extractors or default to standard implementations
+        self.name_extractor = extractors.get("name") or NameExtractor()
+        self.email_extractor = extractors.get("email") or EmailExtractor()
+        self.skills_extractor = extractors.get("skills") or SkillsExtractor()
+        
+        logger.info("Initialized ResumeExtractor with field extractors")
     
     def extract(self, text: str) -> ResumeData:
         """
