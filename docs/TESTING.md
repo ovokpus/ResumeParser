@@ -31,8 +31,8 @@ pytest tests/unit/ -v
 # Run with coverage
 pytest --cov=src/resume_parser --cov-report=html
 
-# Run quick verification
-.venv/bin/python test_quick.py
+# Run setup verification tests
+pytest tests/integration/test_setup_verification.py -v
 
 # Run live demo
 .venv/bin/python demo.py
@@ -178,10 +178,10 @@ cp .env.example .env
 ### Verify Setup
 
 ```bash
-# Run verification script
-.venv/bin/python test_quick.py
+# Run setup verification tests
+pytest tests/integration/test_setup_verification.py -v
 
-# Expected output: All ✓ checks passing
+# Expected output: All tests passing
 ```
 
 ---
@@ -378,7 +378,7 @@ pytest -n auto
 #### Quick Verification
 
 ```bash
-.venv/bin/python test_quick.py
+pytest tests/integration/test_setup_verification.py -v
 ```
 
 Checks:
@@ -402,10 +402,10 @@ Shows:
 #### Real Resume Testing
 
 ```bash
-.venv/bin/python test_real_resume.py
+pytest tests/integration/test_real_resume_parsing.py -v
 ```
 
-Tests with actual resume files (if available).
+Tests with actual resume files (if available in `tests/test_data/`).
 
 ### Manual Testing in Python REPL
 

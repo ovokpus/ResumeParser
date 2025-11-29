@@ -1,9 +1,14 @@
-"""Basic usage examples for Resume Parser Framework."""
+"""
+Basic usage examples for Resume Parser Framework.
+
+These examples demonstrate common use cases for the framework.
+For testing, see the tests/ directory.
+"""
 
 import json
 import logging
 from pathlib import Path
-from resume_parser.core.framework import ResumeParserFramework
+from resume_parser import ResumeParserFramework
 
 # Setup logging to see framework operations
 logging.basicConfig(level=logging.INFO)
@@ -17,8 +22,14 @@ def example_1_parse_pdf():
     
     framework = ResumeParserFramework()
     
-    # Parse PDF resume
-    resume_data = framework.parse_resume("test_data/sample_resume.pdf")
+    # Parse PDF resume (update path to your resume file)
+    resume_path = "path/to/your/resume.pdf"  # Update this path
+    if not Path(resume_path).exists():
+        print(f"⚠ Resume file not found at: {resume_path}")
+        print("   Update the path in this script to point to your resume file.")
+        return
+    
+    resume_data = framework.parse_resume(resume_path)
     
     # Display results
     print("\nExtracted Data:")
@@ -41,8 +52,14 @@ def example_2_parse_word():
     
     framework = ResumeParserFramework()
     
-    # Parse Word resume
-    resume_data = framework.parse_resume("test_data/sample_resume.docx")
+    # Parse Word resume (update path to your resume file)
+    resume_path = "path/to/your/resume.docx"  # Update this path
+    if not Path(resume_path).exists():
+        print(f"⚠ Resume file not found at: {resume_path}")
+        print("   Update the path in this script to point to your resume file.")
+        return
+    
+    resume_data = framework.parse_resume(resume_path)
     
     print("\nExtracted Data:")
     print(json.dumps(resume_data.to_dict(), indent=2))
@@ -56,11 +73,11 @@ def example_3_batch_processing():
     
     framework = ResumeParserFramework()
     
-    # List of resume files
+    # List of resume files (update paths to your resume files)
     resume_files = [
-        "test_data/resume1.pdf",
-        "test_data/resume2.docx",
-        "test_data/resume3.pdf",
+        "path/to/resume1.pdf",
+        "path/to/resume2.docx",
+        "path/to/resume3.pdf",
     ]
     
     results = []
@@ -99,8 +116,8 @@ def example_4_error_handling():
     # Test various error scenarios
     test_cases = [
         ("nonexistent.pdf", "File not found"),
-        ("test_data/corrupted.pdf", "Parsing error"),
-        ("test_data/empty.docx", "Empty content"),
+        ("path/to/corrupted.pdf", "Parsing error"),
+        ("path/to/empty.docx", "Empty content"),
     ]
     
     for file_path, expected_error in test_cases:
