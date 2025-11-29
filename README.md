@@ -46,10 +46,14 @@ flowchart TD
     F --> H
     G --> H
     
-    style A fill:#e1f5ff
-    style B fill:#fff4e1
-    style D fill:#ffe1f5
-    style H fill:#e1ffe1
+    style A fill:#e1f5ff,color:#000
+    style B fill:#fff4e1,color:#000
+    style C fill:#ffffff,color:#000
+    style D fill:#ffe1f5,color:#000
+    style E fill:#ffffff,color:#000
+    style F fill:#ffffff,color:#000
+    style G fill:#ffffff,color:#000
+    style H fill:#e1ffe1,color:#000
 ```
 
 **Component Breakdown:**
@@ -73,11 +77,20 @@ graph TD
     D --> D2[email: str]
     D --> D3[skills: List str]
     
-    style A fill:#4a90e2,color:#fff
-    style B fill:#f5a623
-    style C fill:#7ed321
-    style D fill:#bd10e0,color:#fff
-    style C1 fill:#50e3c2
+    style A fill:#4a90e2,color:#000
+    style B fill:#f5a623,color:#000
+    style C fill:#7ed321,color:#000
+    style D fill:#bd10e0,color:#000
+    style C1 fill:#50e3c2,color:#000
+    style B1 fill:#ffffff,color:#000
+    style B2 fill:#ffffff,color:#000
+    style B3 fill:#ffffff,color:#000
+    style C1A fill:#ffffff,color:#000
+    style C1B fill:#ffffff,color:#000
+    style C1C fill:#ffffff,color:#000
+    style D1 fill:#ffffff,color:#000
+    style D2 fill:#ffffff,color:#000
+    style D3 fill:#ffffff,color:#000
 ```
 
 **Design Patterns:**
