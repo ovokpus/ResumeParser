@@ -44,7 +44,7 @@ flowchart TD
     D --> E[Email Extractor<br/>Regex]
     D --> F[Name Extractor<br/>Rules + NER]
     D --> G[Skills Extractor<br/>GPT-4]
-    E --> H[Structured Data<br/>{name, email, skills}]
+    E --> H[Structured Data<br/>name, email, skills]
     F --> H
     G --> H
     
