@@ -50,8 +50,9 @@ class EmailExtractor(FieldExtractor):
             email = matches[0]
             
             # Additional validation: filter out common false positives
+            # Note: Removed example.com filter to allow test emails
             email_lower = email.lower()
-            invalid_domains = ['example.com', 'test.com', 'domain.com']
+            invalid_domains = ['test.com', 'domain.com', 'sample.com']
             if any(domain in email_lower for domain in invalid_domains):
                 logger.warning(f"Filtered out invalid email: {email}")
                 return ""

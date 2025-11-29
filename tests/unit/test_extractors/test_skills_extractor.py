@@ -9,12 +9,12 @@ from resume_parser.exceptions import ExtractionError, APIError
 class TestSkillsExtractor:
     """Test suite for SkillsExtractor."""
     
-    @patch('resume_parser.extractors.skills_extractor.OpenAI')
-    def setup_method(self, mock_openai):
+    def setup_method(self):
         """Setup test fixture with mocked OpenAI."""
-        self.mock_client = MagicMock()
-        mock_openai.return_value = self.mock_client
-        self.extractor = SkillsExtractor()
+        with patch('resume_parser.extractors.skills_extractor.OpenAI') as mock_openai:
+            self.mock_client = MagicMock()
+            mock_openai.return_value = self.mock_client
+            self.extractor = SkillsExtractor()
     
     def test_extract_skills_success(self, sample_resume_text):
         """Test successful skills extraction."""
@@ -84,7 +84,9 @@ class TestSkillsExtractor:
         skills = [f"Skill{i}" for i in range(50)]  # 50 skills
         mock_response = MagicMock()
         mock_response.choices = [MagicMock()]
-        mock_response.choices[0].message.content = f'{{"skills": {skills}}}'
+        # Properly format the JSON string with proper quotes
+        import json
+        mock_response.choices[0].message.content = json.dumps({"skills": skills})
         mock_response.usage.prompt_tokens = 100
         mock_response.usage.completion_tokens = 100
         mock_response.usage.total_tokens = 200
