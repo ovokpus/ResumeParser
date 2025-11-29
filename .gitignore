@@ -48,3 +48,11 @@ Thumbs.db
 
 # Documentation
 docs/
+
+# Output logs - keep folder, ignore all contents
+outputs/**
+!outputs/.gitkeep
+
+# Input folders - keep folder, ignore all contents
+resumes/**
+!resumes/.gitkeep
