@@ -681,7 +681,7 @@ The framework is designed to be easily extended:
 **Add New File Format:**
 ```python
 from resume_parser.parsers.base import FileParser
-from resume_parser.core.framework import ResumeParserFramework
+from resume_parser import ResumeParserFramework
 
 class HTMLParser(FileParser):
     def parse(self, file_path):
