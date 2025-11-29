@@ -35,30 +35,23 @@ This approach demonstrates **engineering judgment** - knowing when to use AI vs 
 - **Extensible**: Register custom parsers for HTML, RTF, or any custom format
 
 ### Intelligent Extraction
-```
-┌─────────────────────────────────────────────────────────┐
-│                   Resume File (PDF/DOCX)                │
-└────────────────────┬────────────────────────────────────┘
-                     │
-         ┌───────────▼───────────┐
-         │   File Parser Layer   │
-         │  (PDF/Word/Custom)    │
-         └───────────┬───────────┘
-                     │
-              Raw Text Output
-                     │
-         ┌───────────▼───────────┐
-         │  Field Extractors     │
-         ├───────────────────────┤
-         │ • Email (Regex)       │
-         │ • Name (Rules+NER)    │
-         │ • Skills (GPT-4)      │
-         └───────────┬───────────┘
-                     │
-         ┌───────────▼───────────┐
-         │   Structured Data     │
-         │  {name, email, skills}│
-         └───────────────────────┘
+
+```mermaid
+flowchart TD
+    A[Resume File<br/>PDF/DOCX] --> B[File Parser Layer<br/>PDF/Word/Custom]
+    B --> C[Raw Text Output]
+    C --> D[Field Extractors]
+    D --> E[Email Extractor<br/>Regex]
+    D --> F[Name Extractor<br/>Rules + NER]
+    D --> G[Skills Extractor<br/>GPT-4]
+    E --> H[Structured Data<br/>{name, email, skills}]
+    F --> H
+    G --> H
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style D fill:#ffe1f5
+    style H fill:#e1ffe1
 ```
 
 ### Production Quality
@@ -253,23 +246,30 @@ We didn't just slap code together - this is **thoughtfully architected**:
 
 ### Component Breakdown
 
-```
-ResumeParserFramework (Main Orchestrator)
-├── File Parsers (Format Handlers)
-│   ├── PDFParser → Handles PDFs with PyPDF2
-│   ├── WordParser → Handles .docx with python-docx
-│   └── Your Custom Parser → You decide!
-│
-├── Resume Extractor (Coordinator)
-│   └── Field Extractors (Specialists)
-│       ├── EmailExtractor → Regex-based
-│       ├── NameExtractor → Rules + SpaCy NER
-│       └── SkillsExtractor → GPT-4 powered
-│
-└── ResumeData (Output Model)
-    ├── name: str
-    ├── email: str
-    └── skills: List[str]
+```mermaid
+graph TD
+    A[ResumeParserFramework<br/>Main Orchestrator] --> B[File Parsers<br/>Format Handlers]
+    A --> C[Resume Extractor<br/>Coordinator]
+    A --> D[ResumeData<br/>Output Model]
+    
+    B --> B1[PDFParser<br/>PyPDF2]
+    B --> B2[WordParser<br/>python-docx]
+    B --> B3[Custom Parser<br/>Extensible]
+    
+    C --> C1[Field Extractors<br/>Specialists]
+    C1 --> C1A[EmailExtractor<br/>Regex-based]
+    C1 --> C1B[NameExtractor<br/>Rules + SpaCy NER]
+    C1 --> C1C[SkillsExtractor<br/>GPT-4 powered]
+    
+    D --> D1[name: str]
+    D --> D2[email: str]
+    D --> D3[skills: List str]
+    
+    style A fill:#4a90e2,color:#fff
+    style B fill:#f5a623
+    style C fill:#7ed321
+    style D fill:#bd10e0,color:#fff
+    style C1 fill:#50e3c2
 ```
 
 ## Testing
