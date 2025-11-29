@@ -25,17 +25,26 @@
 ### Running Existing Tests
 
 ```bash
-# Run all unit tests (23 tests, all passing)
-pytest tests/unit/ -v
+# Run all tests (unit + integration)
+uv run pytest -v
 
-# Run with coverage
-pytest --cov=src/resume_parser --cov-report=html
+# Run only unit tests (fast, no external dependencies)
+uv run pytest tests/unit/ -v
 
-# Run setup verification tests
-pytest tests/integration/test_setup_verification.py -v
+# Run only integration tests (requires setup verification)
+uv run pytest tests/integration/ -v
 
-# Run live demo
-.venv/bin/python demo.py
+# Run setup verification tests (checks imports, env vars, SpaCy model)
+uv run pytest tests/integration/test_setup_verification.py -v
+
+# Run real resume parsing tests (requires test_data/ files)
+uv run pytest tests/integration/test_real_resume_parsing.py -v
+
+# Run with coverage report
+uv run pytest --cov=src/resume_parser --cov-report=html --cov-report=term
+
+# Run live demo (interactive example)
+uv run python demo.py
 ```
 
 ### Testing with Real Resumes
