@@ -371,7 +371,7 @@ framework = ResumeParserFramework()
 # Parse a PDF resume
 try:
     resume_data = framework.parse_resume("path/to/resume.pdf")
-    
+
     # Access extracted data
     print(f"Name: {resume_data.name}")
     print(f"Email: {resume_data.email}")
@@ -400,7 +400,7 @@ framework = ResumeParserFramework()
 # Parse a Word (.docx) resume
 try:
     resume_data = framework.parse_resume("path/to/resume.docx")
-    
+
     # Access extracted data
     print(f"Name: {resume_data.name}")
     print(f"Email: {resume_data.email}")
@@ -428,9 +428,10 @@ A complete demonstration script showing all framework components working togethe
 Beyond the requirements, the implementation includes:
 
 ### Code Quality ✅
-- **Test Coverage:** 90%+ (53 tests total)
-  - 28 unit tests
-  - 25 integration tests
+- **Test Coverage:** 90%+ (53 tests total - ALL PASSING)
+  - 28 unit tests (all passing)
+  - 25 integration tests (all passing)
+  - Comprehensive edge case handling for image-based DOCX files
 - **Type Hints:** Complete type annotations throughout
 - **Docstrings:** Google-style docstrings for all public APIs
 - **Code Style:** Black formatter, PEP 8 compliant
@@ -451,7 +452,7 @@ Beyond the requirements, the implementation includes:
 - Environment-based configuration with `.env`
 - Pydantic V2 for settings validation
 - Configurable logging levels
-- API key management
+- API key management with proper override handling (`load_dotenv(override=True)`)
 
 ### Extensibility ✅
 - Easy to add new file formats via `register_parser()`
@@ -495,8 +496,10 @@ The Resume Parser Framework successfully implements:
 8. ✅ Object-Oriented Design principles throughout
 
 The implementation exceeds the basic requirements by providing:
-- Comprehensive test coverage (53 tests, 90%+)
+- Comprehensive test coverage (53 tests, 100% passing, 90%+ coverage)
 - Production-ready error handling and logging
+- Proper edge case handling (image-based DOCX files, encrypted PDFs, corrupted files)
+- Robust configuration management with environment variable override
 - Extensible architecture for future enhancements
 - Complete documentation and examples
 - Modern Python best practices (type hints, dataclasses, async-ready)
