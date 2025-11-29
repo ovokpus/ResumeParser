@@ -1,10 +1,16 @@
-"""Example of extending the framework with custom extractors."""
+"""
+Example of extending the framework with custom extractors.
+
+This demonstrates how to create custom field extractors and integrate
+them with the framework.
+"""
 
 import re
+from pathlib import Path
 from typing import List
 from resume_parser.extractors.base import FieldExtractor
 from resume_parser.core.resume_extractor import ResumeExtractor
-from resume_parser.core.framework import ResumeParserFramework
+from resume_parser import ResumeParserFramework
 
 
 class CustomPhoneExtractor(FieldExtractor):
@@ -73,7 +79,13 @@ def main():
     )
     framework = ResumeParserFramework(resume_extractor=custom_extractor)
     
-    result = framework.parse_resume("test_data/sample_resume.pdf")
+    resume_path = "path/to/your/resume.pdf"  # Update this path
+    if not Path(resume_path).exists():
+        print(f"⚠ Resume file not found at: {resume_path}")
+        print("   Update the path in this script to point to your resume file.")
+        return
+    
+    result = framework.parse_resume(resume_path)
     print(f"Name (with custom extractor): {result.name}")
     
     # Option 2: Standalone usage
