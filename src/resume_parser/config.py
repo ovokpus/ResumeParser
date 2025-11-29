@@ -7,7 +7,8 @@ from pydantic import Field, field_validator
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv()
+# Use override=True to prioritize .env file over shell environment variables
+load_dotenv(override=True)
 
 
 class Settings(BaseSettings):
