@@ -148,7 +148,7 @@ If Python is not installed, download from [python.org](https://www.python.org/do
 ### Step 2: Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ovokpus/ResumeParser.git
 cd ResumeParser
 ```
 
@@ -723,7 +723,7 @@ class PhoneExtractor(FieldExtractor):
 - `pytest-cov>=4.0.0` - Coverage reporting
 - `black>=23.0.0` - Code formatting
 
-See `requirements.txt` and `requirements-dev.txt` for complete lists.
+See `pyproject.toml` for complete dependency lists. Dev dependencies can be installed with `uv sync --extra dev` or `pip install -e ".[dev]"`.
 
 ---
 
