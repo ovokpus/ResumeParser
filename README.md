@@ -100,6 +100,8 @@ graph TD
 - **Factory Pattern**: Parser registry for dynamic file format handling
 - **Single Responsibility**: Each class has one clear purpose
 
+**For detailed Object-Oriented Design documentation**, including class hierarchy diagrams, design pattern implementations, and OOD principles, see **[docs/object-oriented-design.md](docs/object-oriented-design.md)**.
+
 **Project Structure:**
 
 ```
@@ -344,12 +346,12 @@ framework = ResumeParserFramework()
 # Parse a PDF resume
 try:
     resume_data = framework.parse_resume("path/to/resume.pdf")
-
+    
     # Access extracted data
     print(f"Name: {resume_data.name}")
     print(f"Email: {resume_data.email}")
     print(f"Skills: {', '.join(resume_data.skills)}")
-
+    
     # Get as dictionary (JSON format)
     data_dict = resume_data.to_dict()
     print(data_dict)
@@ -380,7 +382,7 @@ try:
     # Get as dictionary (JSON format)
     data_dict = resume_data.to_dict()
     print(data_dict)
-        
+    
 except FileNotFoundError:
     print("Error: Resume file not found")
 except Exception as e:
@@ -414,19 +416,19 @@ results = []
 # Process both PDF and Word documents
 for resume_file in resume_folder.glob("*.*"):
     if resume_file.suffix.lower() in [".pdf", ".docx"]:
-    try:
-        data = framework.parse_resume(resume_file)
-        results.append({
-            "filename": resume_file.name,
+        try:
+            data = framework.parse_resume(resume_file)
+            results.append({
+                "filename": resume_file.name,
                 "format": resume_file.suffix,
                 "name": data.name,
-            "email": data.email,
+                "email": data.email,
                 "skills": data.skills,
-            "skill_count": len(data.skills)
-        })
+                "skill_count": len(data.skills)
+            })
             print(f"[OK] {resume_file.name} ({resume_file.suffix})")
-    except Exception as e:
-        print(f"[FAIL] {resume_file.name}: {e}")
+        except Exception as e:
+            print(f"[FAIL] {resume_file.name}: {e}")
 
 # Save results
 import json
