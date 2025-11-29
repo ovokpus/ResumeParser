@@ -44,7 +44,7 @@ class TestEmailExtractor:
     
     def test_invalid_email_filtered(self):
         """Test that invalid/test emails are filtered."""
-        text = "test@example.com should be filtered"
+        text = "test@test.com should be filtered"
         result = self.extractor.extract(text)
         assert result == ""
     
