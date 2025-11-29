@@ -100,8 +100,6 @@ graph TD
 - **Factory Pattern**: Parser registry for dynamic file format handling
 - **Single Responsibility**: Each class has one clear purpose
 
-**For detailed Object-Oriented Design documentation**, including class hierarchy diagrams, design pattern implementations, and OOD principles, see **[docs/object-oriented-design.md](docs/object-oriented-design.md)**.
-
 **Project Structure:**
 
 ```
