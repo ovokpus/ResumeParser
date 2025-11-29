@@ -1,7 +1,15 @@
 """Pytest fixtures and configuration."""
 
+import warnings
 import pytest
 from pathlib import Path
+
+# Suppress PyMuPDF C binding warnings (not actionable - from underlying C library)
+# These must be filtered before PyMuPDF is imported
+warnings.filterwarnings("ignore", message=".*SwigPyPacked.*", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message=".*SwigPyObject.*", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message=".*swigvarlink.*", category=DeprecationWarning)
+
 from resume_parser.models import ResumeData
 
 
