@@ -9,8 +9,6 @@ This directory contains the comprehensive test suite for the Resume Parser Frame
 - **Integration Tests**: 25 tests
 - **Test Coverage**: 90%+
 
-**Note:** The test suite validates the framework's Object-Oriented Design (OOD) architecture. For detailed OOD documentation including class hierarchy, design patterns, and how tests validate OOD principles, see **[docs/object-oriented-design.md](../docs/object-oriented-design.md)**.
-
 ## Test Organization
 
 ```
