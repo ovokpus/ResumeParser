@@ -20,7 +20,8 @@ class Settings(BaseSettings):
     )
     
     # OpenAI Configuration
-    openai_api_key: str = Field(...)
+    # Optional: without a key, skills fall back to the offline keyword extractor.
+    openai_api_key: Optional[str] = Field(default=None)
     openai_model: str = Field(default='gpt-4-turbo-preview')
     openai_max_tokens: int = Field(default=1000)
     openai_temperature: float = Field(default=0.1)
@@ -49,6 +50,11 @@ class Settings(BaseSettings):
         if not 0 <= v <= 2:
             raise ValueError('openai_temperature must be between 0 and 2')
         return v
+
+    @property
+    def llm_enabled(self) -> bool:
+        key = (self.openai_api_key or "").strip()
+        return bool(key) and key != "your_api_key_here"
 
 
 # Global settings instance

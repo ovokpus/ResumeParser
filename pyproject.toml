@@ -26,42 +26,41 @@ classifiers = [
 
 dependencies = [
     # Core parsing libraries
-    "pymupdf>=1.23.0",            # PDF text extraction (PyMuPDF)
-    "python-docx>=1.1.0",         # Word document parsing
-    
+    "pymupdf>=1.23.0", # PDF text extraction (PyMuPDF)
+    "python-docx>=1.1.0", # Word document parsing
     # NLP for name extraction
-    "spacy>=3.7.2",               # NER for name extraction
+    "spacy>=3.7.2", # NER for name extraction
     # Note: Run 'uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl' after install
-    
     # LLM integration
-    "openai>=1.30.0",             # GPT-4 API (Python 3.13 compatible)
-    "tiktoken>=0.7.0",            # Token counting (Python 3.13 compatible)
-    
+    "openai>=1.30.0", # GPT-4 API (Python 3.13 compatible)
+    "tiktoken>=0.7.0", # Token counting (Python 3.13 compatible)
     # Configuration & environment
-    "python-dotenv>=1.0.0",       # Environment variable management
-    "pydantic>=2.5.3",            # Data validation
-    "pydantic-settings>=2.1.0",   # Settings management
-    
+    "python-dotenv>=1.0.0", # Environment variable management
+    "pydantic>=2.5.3", # Data validation
+    "pydantic-settings>=2.1.0", # Settings management
     # Utilities
-    "tenacity>=8.2.3",            # Retry logic for API calls
+    "tenacity>=8.2.3", # Retry logic for API calls
+    "en-core-web-sm",
+    "fastapi>=0.162.0",
+    "uvicorn[standard]>=0.54.0",
+    "python-multipart>=0.0.32",
 ]
 
 [project.optional-dependencies]
 dev = [
     # Testing
     "pytest>=7.4.3",
-    "pytest-cov>=4.1.0",          # Coverage reporting
-    "pytest-mock>=3.12.0",        # Mocking utilities
-    "responses>=0.24.1",          # HTTP mocking for OpenAI API
-    
+    "pytest-cov>=4.1.0", # Coverage reporting
+    "pytest-mock>=3.12.0", # Mocking utilities
+    "responses>=0.24.1", # HTTP mocking for OpenAI API
     # Code quality
-    "black>=23.12.1",             # Code formatting
-    "flake8>=7.0.0",              # Linting
-    "mypy>=1.8.0",                # Type checking
-    "isort>=5.13.2",              # Import sorting
-    
+    "black>=23.12.1", # Code formatting
+    "flake8>=7.0.0", # Linting
+    "mypy>=1.8.0", # Type checking
+    "isort>=5.13.2", # Import sorting
     # Development
-    "ipython>=9.0.0",             # Interactive shell
+    "ipython>=9.0.0", # Interactive shell
+    "httpx>=0.28.1",
 ]
 
 [project.urls]
@@ -154,4 +153,7 @@ exclude_lines = [
     "class .*\\bProtocol\\):",
     "@(abc\\.)?abstractmethod",
 ]
+
+[tool.uv.sources]
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
 

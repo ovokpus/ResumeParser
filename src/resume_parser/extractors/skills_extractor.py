@@ -24,6 +24,8 @@ class SkillsExtractor(FieldExtractor):
     - Deduplicate and normalize skill names
     """
     
+    mode = "llm"
+
     # System prompt for GPT-4
     SYSTEM_PROMPT = """You are an expert resume parser specializing in extracting skills from resumes.
 

@@ -6,10 +6,20 @@ from resume_parser.extractors.base import FieldExtractor
 from resume_parser.extractors.name_extractor import NameExtractor
 from resume_parser.extractors.email_extractor import EmailExtractor
 from resume_parser.extractors.skills_extractor import SkillsExtractor
+from resume_parser.extractors.keyword_skills_extractor import KeywordSkillsExtractor
+from resume_parser.config import settings
 from resume_parser.exceptions import ExtractionError
 from resume_parser.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
+
+
+def default_skills_extractor() -> FieldExtractor:
+    """GPT skills extraction when an OpenAI key is configured, otherwise offline keyword matching."""
+    if settings.llm_enabled:
+        return SkillsExtractor()
+    logger.warning("OPENAI_API_KEY not set: using offline KeywordSkillsExtractor (no LLM)")
+    return KeywordSkillsExtractor()
 
 
 class ResumeExtractor:
@@ -50,7 +60,7 @@ class ResumeExtractor:
         # Use provided extractors or default to standard implementations
         self.name_extractor = extractors.get("name") or NameExtractor()
         self.email_extractor = extractors.get("email") or EmailExtractor()
-        self.skills_extractor = extractors.get("skills") or SkillsExtractor()
+        self.skills_extractor = extractors.get("skills") or default_skills_extractor()
         
         logger.info("Initialized ResumeExtractor with field extractors")
     
