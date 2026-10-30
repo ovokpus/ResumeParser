@@ -56,3 +56,9 @@ outputs/**
 # Input folders - keep folder, ignore all contents
 resumes/**
 !resumes/.gitkeep
+
+# local app
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+.DS_Store
