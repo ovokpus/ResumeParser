@@ -46,10 +46,11 @@ htmlcov/
 Thumbs.db
 .cursor/
 
-# Documentation: ignore scratch files in docs/, but keep the markdown and the README screenshots
+# Documentation: ignore scratch files in docs/, but keep the markdown, the README screenshots and the README SVGs
 docs/*
 !docs/*.md
 !docs/screenshots/
+!docs/assets/
 
 # Output logs - keep folder, ignore all contents
 outputs/**

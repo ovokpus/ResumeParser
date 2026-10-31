@@ -1,5 +1,7 @@
 # 📄 Resume Parser
 
+<p align="center"><img src="docs/assets/hero.svg" alt="Resume Parser" width="100%"/></p>
+
 > Upload a PDF or Word resume and get back structured **name, email and skills** as JSON. A layered Python framework (PyMuPDF, python-docx, spaCy NER, GPT) is now wrapped in a **FastAPI service and a React upload UI** that start with a single `docker compose up`, **with or without an OpenAI key**.
 
 ![Parsed resume](docs/screenshots/app-parsed-pdf.png)
@@ -11,6 +13,8 @@
 Resumes come in many layouts and two main file formats. Recruiting tools need the same three fields from every one of them, reliably, and should degrade gracefully when a file is odd or a service is down.
 
 ## 2. How it works
+
+<p align="center"><img src="docs/assets/flow.svg" alt="Resume Parser data flow" width="100%"/></p>
 
 ```mermaid
 flowchart LR
