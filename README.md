@@ -8,6 +8,10 @@
 
 ---
 
+## Business case
+
+Recruiting teams still copy names, emails and skills from resumes into their systems by hand. This parser reads PDF and Word files and returns those fields as JSON, with each field extracted separately so one failure doesn't lose the rest. It extracts data and makes no hiring decision, which matters under laws such as New York City's Local Law 144. [docs/BUSINESS_CASE.md](docs/BUSINESS_CASE.md) covers the use cases, an illustrative ROI model and the privacy risks.
+
 ## 1. The problem
 
 Resumes come in many layouts and two main file formats. Recruiting tools need the same three fields from every one of them, reliably, and should degrade gracefully when a file is odd or a service is down.
