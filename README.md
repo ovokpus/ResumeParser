@@ -1,5 +1,7 @@
 # 📄 Resume Parser
 
+<p align="center"><img src="assets/banner.jpg" alt="Stack of blank cards under a brass clip beside a brass loupe and wooden letterpress type on a dark surface" width="100%"></p>
+
 <p align="center"><img src="docs/assets/hero.svg" alt="Resume Parser" width="100%"/></p>
 
 > Upload a PDF or Word resume and get back structured **name, email and skills** as JSON. A layered Python framework (PyMuPDF, python-docx, spaCy NER, GPT) is now wrapped in a **FastAPI service and a React upload UI** that start with a single `docker compose up`, **with or without an OpenAI key**.
