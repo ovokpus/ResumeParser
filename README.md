@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.jpg" alt="Stack of blank cards under a brass clip beside a brass loupe and wooden letterpress type on a dark surface" width="100%"></p>
+
 # 📄 Resume Parser
 
 <p align="center"><img src="docs/assets/hero.svg" alt="Resume Parser" width="100%"/></p>
